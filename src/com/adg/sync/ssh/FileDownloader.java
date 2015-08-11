@@ -10,10 +10,21 @@ import java.io.OutputStream;
 
 /**
  * Created by adg on 10/06/2015.
+ *
  */
 public class FileDownloader {
 
-    public static boolean downloadFile(Session session, String rFile, String relativePath, String localFolder) throws Exception {
+    /**
+     * Downloads a file to the folder specified by localFolder and relativePath
+     * @param session an already opened session to be used to download
+     * @param rFile path to the file to be downloaded
+     * @param relativePath a path relative to localFolder, can be null or empty
+     * @param localFolder the path to the folder where the files should be downloaded
+     * @return true if successful, false otherwise
+     * @throws IOException
+     * @throws JSchException
+     */
+    public static boolean downloadFile(Session session, String rFile, String relativePath, String localFolder) throws IOException, JSchException {
         if (relativePath == null) {
             relativePath = "";
         }

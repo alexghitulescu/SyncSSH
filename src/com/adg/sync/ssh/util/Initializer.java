@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 /**
  * Created by adg on 10/06/2015.
+ *
+ * A class used to read from the init file (SyncSSH.ini)
  */
 public class Initializer {
     public static final String FILE_INIT = "/SyncSSH.ini";
@@ -21,6 +23,10 @@ public class Initializer {
     private String username = "", password = "", host = "";
     private List<ActionDescriptor> actionDescriptors = new ArrayList<>();
 
+    /**
+     * Initializes this object from the specified path.
+     * @param path path to the folder that contains the SyncSSH.ini file
+     */
     public void init(String path) {
         actionDescriptors.clear();
         try (BufferedReader br = new BufferedReader(new FileReader(path + FILE_INIT))) {

@@ -12,6 +12,15 @@ import java.io.*;
  */
 public class FileUploader {
 
+    /**
+     * Uploads a file to the specified location.
+     *
+     * @param session an open session to be used
+     * @param lFile path to the local file
+     * @param fileName the new file name for the server file
+     * @param remoteFolder path to the remote directory where the file will be written
+     * @return true if successful, false otherwise
+     */
     public static boolean uploadFile(Session session, String lFile, String fileName, String remoteFolder) {
         FileInputStream fis = null;
         try {

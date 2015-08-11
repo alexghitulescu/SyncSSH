@@ -12,6 +12,7 @@ import java.util.Vector;
 /**
  * Created by adg on 11/06/2015.
  *
+ * An object that can be used to maintain a connection to the server
  */
 public class Connector {
 
@@ -19,11 +20,19 @@ public class Connector {
     private Session session;
     private Initializer initializer;
 
+    /**
+     * Creates a new connector and uses the initializer to get the data required for connection
+     * @param initializer the initializer object, has to be initialized
+     */
     public Connector(Initializer initializer) {
         this.initializer = initializer;
         this.jsch = new JSch();
     }
 
+    /**
+     * Starts a connection
+     * @return a {@link com.jcraft.jsch.Session} or null if the connection was unsuccessful
+     */
     public Session connect() {
         disconnect();
 
@@ -42,6 +51,9 @@ public class Connector {
         return session;
     }
 
+    /**
+     * Disconnects the session
+     */
     public void disconnect() {
         if (session != null) {
             try {
@@ -52,6 +64,10 @@ public class Connector {
         }
     }
 
+    /**
+     * Checks if a session is alive
+     * @return
+     */
     public boolean isConnected() {
         return session != null && session.isConnected();
     }
@@ -60,6 +76,16 @@ public class Connector {
         return session;
     }
 
+    /**
+     * Returns a {@link List} of {@link FileInfo} with all files in the folder given by rootFolder
+     * and folder that have one of the specified extensions.
+     *
+     * @param rootFolder the root folder to look into
+     * @param folder a subfolder, can be empty or null
+     * @param extensions a {@code List} of extensions to be accepted
+     * @param recursive true if the algorithm should look into subfolders
+     * @return a {@link List} of {@link FileInfo}
+     */
     public List<FileInfo> getRemoteFiles(String rootFolder, String folder, List<String> extensions, boolean recursive) {
         // sanity check
         if (folder == null) {

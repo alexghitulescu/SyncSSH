@@ -9,6 +9,8 @@ import java.util.Date;
 
 /**
  * Created by adg on 10/06/2015.
+ *
+ * Class used to log error or messages to a file
  */
 public class Logger {
 

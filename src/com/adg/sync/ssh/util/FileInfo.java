@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * Created by adg on 11/06/2015.
+ *
+ * Holds information about a file.
  */
 public class FileInfo {
 
@@ -13,10 +15,23 @@ public class FileInfo {
     private long lastModified;
     private boolean folder;
 
+    /**
+     * Creates an object representing a file
+     * @param name the name of the file
+     * @param lastModified last modified time in seconds from Jan 1, 1970 in UTC.
+     * @param relativePath path to the folder containing the file
+     */
     public FileInfo(String name, long lastModified, String relativePath) {
         this(name, lastModified, relativePath, false);
     }
 
+    /**
+     * Creates an object representing a file of folder
+     * @param name the name of the file or folder
+     * @param lastModified last modified time in seconds from Jan 1, 1970 in UTC.
+     * @param relativePath path to the folder containing the file or folder
+     * @param folder true if it's a folder, false otherwise
+     */
     public FileInfo(String name, long lastModified, String relativePath, boolean folder) {
         this.name = name;
         this.lastModified = lastModified;
@@ -30,18 +45,30 @@ public class FileInfo {
         }
     }
 
+    /**
+     * @return name of the file or folder represented by this object
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return the last modified time in seconds from Jan 1, 1970 in UTC.
+     */
     public long getLastModified() {
         return lastModified;
     }
 
+    /**
+     * @return path of the folder containing this file or folder
+     */
     public String getRelativePath() {
         return relativePath;
     }
 
+    /**
+     * @return path to this file or folder
+     */
     public String getFullName() {
         return fullName;
     }
@@ -73,6 +100,15 @@ public class FileInfo {
         return "FileInfo {" + fullName + ", " + lastModified + ", " + (folder ? "folder" : "file") + ")";
     }
 
+    /**
+     * Return a list of local files that are in the path represented by rootPath joined with path that have one of
+     * the extensions in the list
+     * @param rootPath the path to the folder to look into
+     * @param path relative to rootPath, a subfolder, can be null or empty
+     * @param extensions a {@link List} of accepted extensions
+     * @param recursive true if it should look in subfolders
+     * @return a list of local files
+     */
     public static List<FileInfo> getLocalFiles(String rootPath, String path, List<String> extensions, boolean recursive) {
         // sanity check
         if (path == null) {

@@ -8,6 +8,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by adg on 11/06/2015.
+ *
+ * The main part of this project, It uses the other objects to connect, and perform the specified actions.
  */
 public class Worker {
 
@@ -15,6 +17,11 @@ public class Worker {
     private Connector connector;
     private Initializer initializer;
 
+    /**
+     * Constructs a Worker object, initializes the application and start the connection.
+     * @param path path to the folder containing SyncSSH.ini
+     * @param upload true if the desired action is upload, false if it is download
+     */
     public Worker(String path, boolean upload) {
         this.upload = upload;
 
@@ -25,10 +32,16 @@ public class Worker {
         connector.connect();
     }
 
+    /**
+     * Disconnects the connection.
+     */
     public void close() {
         connector.disconnect();
     }
 
+    /**
+     * performs the upload / download actions
+     */
     public void sync() {
         for (ActionDescriptor actionDescriptor : initializer.getActionDescriptors()) {
             if (actionDescriptor.isUpload() != upload) {
@@ -43,6 +56,10 @@ public class Worker {
         }
     }
 
+    /**
+     * Requires a download {@link ActionDescriptor}. Downloads the files specified by the action.
+     * @param actionDescriptor action to be performed
+     */
     public void download(ActionDescriptor actionDescriptor) {
         List<FileInfo> remoteFiles = connector.getRemoteFiles(actionDescriptor.getRemoteFolder(), "", actionDescriptor.getExtensions(), true);
         List<FileInfo> localFiles = FileInfo.getLocalFiles(actionDescriptor.getLocalFolder(), "", actionDescriptor.getExtensions(), true);
@@ -76,6 +93,10 @@ public class Worker {
         Logger.logMessage("worker", "downloaded " + fileNr.get() + " files");
     }
 
+    /**
+     * Requires an upload {@link ActionDescriptor}. Uploads the files specified by the action.
+     * @param actionDescriptor action to be performed
+     */
     public void upload(ActionDescriptor actionDescriptor) {
         List<FileInfo> remoteFiles = connector.getRemoteFiles(actionDescriptor.getRemoteFolder(), "", actionDescriptor.getExtensions(), true);
         List<FileInfo> localFiles = FileInfo.getLocalFiles(actionDescriptor.getLocalFolder(), "", actionDescriptor.getExtensions(), true);

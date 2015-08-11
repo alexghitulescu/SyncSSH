@@ -4,6 +4,8 @@ import com.jcraft.jsch.UserInfo;
 
 /**
  * Created by adg on 11/06/2015.
+ *
+ * A simple class that mimics a user in Jsch. As this tool should work autonomously, all prompts are handled here.
  */
 public class AutomatedUserInfo implements UserInfo {
 
