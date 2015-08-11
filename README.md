@@ -7,8 +7,8 @@ After running it will create a SyncSSH.log file, where all logs are store. If ex
 
 Usage:
 	- encrypt password for ini file
-		java -jar SyncSSH.jar pass <your password>
+		"java -jar SyncSSH.jar pass <your password>"
 	- download
-		java -jar SyncSSH.jar download <path to SyncSSH.ini file, use . for current directory>
+		"java -jar SyncSSH.jar download <path to SyncSSH.ini file, use . for current directory>"
 	-upload
-		java -jar SyncSSH.jar upload <path to SyncSSH.ini file>
+		"java -jar SyncSSH.jar upload <path to SyncSSH.ini file>"
