@@ -94,11 +94,10 @@ public class Connector {
         try {
             ChannelSftp channelSftp = (ChannelSftp) session.openChannel("sftp");
             channelSftp.connect(10000);
-
             channelSftp.rm(path);
-
             channelSftp.disconnect();
 
+            Logger.logMessage("Connector#removeRemoteFile", "Removed remote file '" + path + "'");
             return true;
         } catch (Exception e) {
             Logger.logError(e);

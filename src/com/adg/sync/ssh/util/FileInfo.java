@@ -101,11 +101,18 @@ public class FileInfo {
      * @return the output of {@link File#delete()} on the path represented by {@link #getFullName()}
      */
     public boolean removeFile(String localFolder) {
-        if (!new File(localFolder + "/" + fullName).delete()) {
+        if (localFolder == null) {
+            localFolder = "";
+        } else {
+            localFolder = localFolder.trim();
+        }
+
+        String path = localFolder.isEmpty() ? fullName : localFolder + "/" + fullName;
+        if (!new File(path).delete()) {
             System.out.println("Could not delete the file '" + fullName + "'");
             return false;
         } else {
-            System.out.println("Removed the file '" + fullName + "'");
+            Logger.logMessage("FileInfo#removeFile", "Removed the file '" + fullName + "'");
             return true;
         }
     }
