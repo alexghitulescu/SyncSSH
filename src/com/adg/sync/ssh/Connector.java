@@ -66,7 +66,7 @@ public class Connector {
 
     /**
      * Checks if a session is alive
-     * @return
+     * @return true if the session is connected (see {@link Session#isConnected()})
      */
     public boolean isConnected() {
         return session != null && session.isConnected();
@@ -74,6 +74,38 @@ public class Connector {
 
     public Session getSession() {
         return session;
+    }
+
+    /**
+     * Deletes a remote file. Returns true if successful. BE CAREFUL
+     *
+     * @param path path on remote server
+     * @return true if successful
+     */
+    public boolean removeRemoteFile(String path) {
+        if (!isConnected()) {
+            connect();
+            if (!isConnected()) {
+                Logger.logError(new Exception("Could not connect to remote host"));
+                return false;
+            }
+        }
+
+        try {
+            ChannelSftp channelSftp = (ChannelSftp) session.openChannel("sftp");
+            channelSftp.connect(10000);
+
+            channelSftp.rm(path);
+
+            channelSftp.disconnect();
+
+            return true;
+        } catch (Exception e) {
+            Logger.logError(e);
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     /**

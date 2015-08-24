@@ -5,7 +5,7 @@ import com.adg.sync.ssh.util.*;
 
 /**
  * Created by adg on 10/06/2015.
- * 
+ *
  */
 public class Main {
 
@@ -67,6 +67,7 @@ public class Main {
         if (Logger.getErrorCount() == 0) {
             System.exit(0);
         } else {
+            System.out.println("there were: " + Logger.getErrorCount() + " errors");
             System.exit(3);
         }
     }

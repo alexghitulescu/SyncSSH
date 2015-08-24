@@ -52,6 +52,7 @@ public class Logger {
     }
 
     public static void logError(Exception exception) {
+        System.out.println("log exception: " + exception.toString());
         errorCount++;
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(folder + FILE_ERROR, true)))) {
             out.println();
@@ -66,6 +67,7 @@ public class Logger {
     }
 
     public static void log(String message, String file) {
+        System.out.println("log message: " + message);
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
             out.println();
             out.append("Log Entry : ").append(SDF.format(new Date()));

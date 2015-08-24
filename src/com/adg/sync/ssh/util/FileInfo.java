@@ -95,6 +95,21 @@ public class FileInfo {
         return fullName.hashCode();
     }
 
+    /**
+     * Removes a file and prints to stdout the output. Works on folders only if they are empty
+     *
+     * @return the output of {@link File#delete()} on the path represented by {@link #getFullName()}
+     */
+    public boolean removeFile(String localFolder) {
+        if (!new File(localFolder + "/" + fullName).delete()) {
+            System.out.println("Could not delete the file '" + fullName + "'");
+            return false;
+        } else {
+            System.out.println("Removed the file '" + fullName + "'");
+            return true;
+        }
+    }
+
     @Override
     public String toString() {
         return "FileInfo {" + fullName + ", " + lastModified + ", " + (folder ? "folder" : "file") + ")";
@@ -119,13 +134,13 @@ public class FileInfo {
         ArrayList<FileInfo> localFiles = new ArrayList<>();
         File folder = new File(rootPath + "/" + path);
         if (!folder.exists()) {
-            Logger.logError("folder: " + rootPath + " does not exist");
+            Logger.logMessage("folder: " + rootPath + " does not exist");
             return localFiles;
         }
         File[] files = folder.listFiles();
 
         if (files == null) {
-            Logger.logError("no files in folder: " + rootPath);
+            Logger.logMessage("no files in folder: " + rootPath);
             return localFiles;
         }
 

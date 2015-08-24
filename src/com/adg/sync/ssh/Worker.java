@@ -65,6 +65,7 @@ public class Worker {
         List<FileInfo> localFiles = FileInfo.getLocalFiles(actionDescriptor.getLocalFolder(), "", actionDescriptor.getExtensions(), true);
         AtomicInteger fileNr = new AtomicInteger(0);
 
+        // download new files
         remoteFiles.stream().filter(FileInfo::isFile).forEachOrdered(remoteFile -> {
 
             FileInfo localFile = Util.find(localFiles, remoteFile);
@@ -89,6 +90,10 @@ public class Worker {
                 }
             }
         });
+
+        localFiles.stream().filter(FileInfo::isFile)
+                .filter(localFile -> !remoteFiles.contains(localFile))
+                .forEach(localFile -> localFile.removeFile(actionDescriptor.getLocalFolder()));
 
         Logger.logMessage("worker", "downloaded " + fileNr.get() + " files");
     }
@@ -123,6 +128,10 @@ public class Worker {
                 }
             }
         });
+
+        remoteFiles.stream().filter(FileInfo::isFile)
+                .filter(remoteFile -> !localFiles.contains(remoteFile))
+                .forEach(remoteFile -> connector.removeRemoteFile(actionDescriptor.getRemoteFolder() + "/" + remoteFile.getFullName()));
 
         Logger.logMessage("worker", "uploaded " + fileNr.get() + " files");
     }
